@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,11 +24,10 @@ public class BlogPost {
     private String category;
 
     @Column(nullable = true)
-    private String tags;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> tags;
 
-    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
 }
