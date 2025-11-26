@@ -87,6 +87,24 @@ public class BlogPostController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/posts/search")
+    @Operation(summary = "Search a post by title, category or content")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found related posts"),
+            @ApiResponse(responseCode = "404", description = "No post found")
+    })
+    public ResponseEntity<List<BlogPost>> findPost(
+            @RequestParam(required = false) String term
+    ) {
+        List<BlogPost> posts = blogPostService.searchPosts(term);
+
+        if (posts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(posts);
+    }
+
 
 
 
